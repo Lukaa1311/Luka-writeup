@@ -1,6 +1,8 @@
 ## pwn.college Writeup 
 - Pwntools : https://docs.pwntools.com/en/stable/
+  
 + Code snippet (From https://dvvyn.medium.com/pwn-college-assembly-crash-course-cb0eb4aba719)
+  
   from pwn import *
   context.update(arch='amd64')
   code = asm("""Put the assembly code here""")
