@@ -61,9 +61,7 @@
   
    Solutions :
                imul rdi, rsi
-  
                add rdi, rdx
-  
                mov rax, rdi 
    Note : Phân biệt sự khác nhau giữa mul(unsigned multiply) và imul(signed multiply)
   
@@ -80,7 +78,6 @@
    Note that distance will be at most a 64-bit value, so rdx should be 0 when dividing.
   
    Solution : mov rax, rdi
-  
               div rsi
   
    Note : Lưu í về cách sử dụng div:   
@@ -101,10 +98,22 @@
 
    9. set-upper-byte :Using only one move instruction, please set the upper 8 bits of the ax register to 0x42.
 
-   Solutions : mov ah, 0x42
+   Solutions : mov a   h, 0x42
 
    Note: Ban đầu mình làm là mov ax, 0x42 nhưng giá trị sai vì hình như ax là 0x0 theo như lỗi ở trong linux, và để í cái bảng, thì lower 8 bits sẽ là al, vậy nên 
    upper 8 bits sẽ là thanh ghi ah.
 
-   10. 
+   10. efficient-modulo : Please compute the following:
+       
+   rax = rdi % 256
+   rbx = rsi % 65536
 
+   Solution : mov al, dil
+              mov bx, si
+   Note : đọc kĩ gợi í của bài, có 1 chút math trick : 256 = 2^8, 65536 = 2^16 -> số mũ là số lower của số bits -> 1 byte = 8 bit nên quy đổi về bảng các thanh ghi để lựa chọn thanh ghi đúng, ở
+
+   trường hợp này rax là al, rdi là dil, rbx là bx, rsi là si.
+
+   11. byte-extraction : Please perform the following: Set rax to the 5th least significant byte of rdi.
+
+  
