@@ -45,7 +45,7 @@
   
    Solution : add rdi, 0x331337
   
-   7. linear-equation-registers:
+   6. linear-equation-registers:
 
    Using your new knowledge, please compute the following:
   
@@ -67,10 +67,20 @@
                mov rax, rdi 
    Note : Phân biệt sự khác nhau giữa mul(unsigned multiply) và imul(signed multiply)
   
-   9. interger-division : Please compute the following:
+   7. interger-division : Please compute the following:
    speed = distance / time, where:
    distance = rdi
    time = rsi
    speed = rax
    Note that distance will be at most a 64-bit value, so rdx should be 0 when dividing.
-   Solution : 
+   Solution : mov rax, rdi
+              div rsi
+   Note : Lưu í về cách sử dụng div:   
+   https://www.tutorialspoint.com/assembly_programming/assembly_arithmetic_instructions.htm
+
+   div là phép chia tạo ra 1 thương và 1 phần dư.
+
+   8. modulo-operation: Please compute the following: rdi % rsi
+
+   
+
