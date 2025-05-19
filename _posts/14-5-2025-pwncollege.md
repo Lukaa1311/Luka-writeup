@@ -114,6 +114,134 @@
 
    trường hợp này rax là al, rdi là dil, rbx là bx, rsi là si.
 
-   11. byte-extraction : Please perform the following: Set rax to the 5th least significant byte of rdi.
+   11. byte-extraction : Please perform the following: Set rax to the 5th least significant byte of rdi. 
 
+   For example:
+
+   rdi = | B7 | B6 | B5 | B4 | B3 | B2 | B1 | B0 |
   
+   Set rax to the value of B4
+
+   Solution :
+
+   shr rdi, 32         ; 5th least significant byte là byte số 4, đếm từ 0, ô trống sẽ là | 0 | 0 | 0 | 0 | B7 | B6 | B5 | B4 | 
+
+   mov al, dil         ; al là bit thấp nhất của rax (byte0) và dil là bit thấp nhất của rdi (byte 0)
+
+   12. bitwise-and : Without using the following instructions: mov, xchg, please perform the following:
+
+   Set rax to the value of (rdi AND rsi)
+
+   Solution :
+  
+   and rdi, rsi          ; thực hiện phép toán and 
+
+   lea rax, [rdi]        ; lea chuyển địa chỉ của toán hạng nguồn đến với toán hạng đích, để í dấu [] vì có 2 ngữ cảnh khác nhau với giá trị khác nhau nếu có ngoặc hoặc không có ngoặc.
+
+   13. check-even : Using only the following instructions:
+
+   and
+  
+   or
+  
+   xor
+  
+
+  Implement the following logic:
+
+  if x is even then
+    y = 1
+  else
+    y = 0
+  Where:
+  
+  x = rdi
+
+  y = rax
+
+  Solution :
+
+  Note : https://www.tutorialspoint.com/assembly_programming/assembly_logical_instructions.htm , đọc hiểu kĩ về các thanh ghi logical trong assembly
+
+  Logic đoạn code vận hành : x chẵn => bit thấp nhất của x = 0 (bit 0)
+                             x lẻ => bit thấp nhất của x = 1 
+  Với yêu cầu đề bài x = 0 => y = 1 và ngược lại 
+  
+  Code solution :
+
+  and rdi, 1           ; giữ lại bit thấp nhất của rdi, các bit khác thành 0
+
+  xor rax, rax         ; clear rax về 0(số nào xor với chính nó cũng bằng 0)
+
+  xor rdi, 1           ; đảo bit thấp nhất của thanh ghi rdi, 0 thành 1, 1 thành 0
+
+  or rax, rdi          ; gán rax = rdi ( 0 hoặc 1)
+
+  13. memory-read : Please perform the following: Place the value stored at 0x404000 into rax. Make sure the value in rax is the original value stored at 0x404000.
+ 
+  Solution : mov rax, [0x404000]   ; lưu ý ở đây là dấu [] thể hiện cho memory access, đọc giá trị từ bộ nhớ tại địa chỉ 0x404000 vào thanh ghi rax.
+
+  14. memory-write : Place the value stored in rax to 0x404000
+
+  Solution : mov [0x404000], rax  ; khác với bài trên, bài này là ghi giá trị trong thanh ghi rax vào bộ nhớ tại địa chỉ 0x404000.
+
+  15. memory-increment :
+  Place the value stored at 0x404000 into rax.
+
+  Increment the value stored at the address 0x404000 by 0x1337.
+  
+  Make sure the value in rax is the original value stored at 0x404000 and make sure that [0x404000] now has the incremented value.
+
+  Solution :
+
+  mov rax, [0x404000]      
+  
+  mov rbx, 0x1337
+  
+  add [0x404000], rbx 
+
+  Challenge noting : tuy là đã nắm rõ khái quát về memory access và memory write, nhưng vẫn rất dễ nhầm lẫn bởi thứ tự khi khai báo thanh ghi trên câu lệnh. 
+  ví dụ nếu mov rax, [0x404000] thì sẽ là đọc giá trị tại bộ nhớ 0x404000 vào thanh ghi rax, còn lệnh add [0x404000], rbx là cộng trực tiếp vào vùng nhớ chứ
+  không phải cộng vào thanh ghi.
+
+  16. byte-access : Set rax to the byte at 0x404000.
+
+  Solution: mov al, [0x404000] ; đọc 1 byte từ bộ nhớ tại địa chỉ trên và lưu vào thanh ghi al.
+
+  17. memory-size-access :
+  
+  Set rax to the byte at 0x404000
+
+  Set rbx to the word at 0x404000
+  
+  Set rcx to the double word at 0x404000
+  
+  Set rdx to the quad word at 0x404000
+
+  Solution : Đã có công thức sẵn về byte, word, double word và quad word, chỉ cần tìm đúng những thanh ghi tương ứng là được ( xem bảng thanh ghi trong note NASM của 5o1z)
+  
+  mov al, [0x404000]
+  
+  mov bx, [0x404000]
+  
+  mov ecx, [0x404000]
+  
+  mov rdx, [0x404000]
+
+  18. little-endian-write : Using the earlier mentioned info, perform the following:
+
+  Set [rdi] = 0xdeadbeef00001337
+  
+  Set [rsi] = 0xc0ffee0000
+
+  Solution : ở đây chúng ta sử dụng lệnh movq ( lệnh di chuyển dữ liệu dạng 64-bit/ quadword):
+
+  movq rax, 0xdeadbeef00001337
+  
+  movq [rdi], rax
+  
+  movq rbx, 0xc0ffee0000
+  
+  movq [rsi], rbx
+
+  19. 
