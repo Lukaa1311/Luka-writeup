@@ -244,4 +244,22 @@
   
   movq [rsi], rbx
 
-  19. 
+  19. memory-sum : Perform the following:
+
+  Load two consecutive quad words from the address stored in rdi.
+  
+  Calculate the sum of the previous steps' quad words.
+  
+  Store the sum at the address in rsi.
+
+  Solution:
+  
+  movq rax, [rdi]
+
+  movq rbx, [rdi + 8]   
+
+  addq rax, rbx   ; tính tổng sum với 2 giá trị vừa lưu trữ ở trên 
+
+  movq rax, rsi
+
+  20. 
