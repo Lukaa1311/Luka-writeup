@@ -262,4 +262,32 @@
 
   movq rax, rsi
 
-  20. 
+  20. stack-subtraction : Using these instructions, take the top value of the stack, subtract rdi from it, then put it back.
+
+  Solution:
+
+  pop rax        ; lấy giá trị hiện tại trên đỉnh stack cho vào thanh ghi rax
+
+  sub rax, rdi   ; lấy rax - rdi
+
+  push rax       ; đẩy giá trị vừa trừ trở lại vào trong đỉnh stack
+
+  21. swap-stack-values : Using only the following instructions:
+
+  push
+  
+  pop
+  
+  Swap values in rdi and rsi.
+
+  Solution :
+
+  push rdi    ; đấy giá trị từ top stack vào rdi trước, ví dụ bắt đầu là rdi = 2
+  
+  push rsi    ; tương tự đẩy vào rsi trước, ví dụ rsi = 5
+  
+  pop rdi     ; swap, lấy giá trị từ rdi suy ra rdi = 5
+  
+  pop rsi     ; swap, lấy giá trị từ rsi suy ra rsi = 2 
+
+  22. 
