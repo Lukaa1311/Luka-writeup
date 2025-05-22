@@ -337,5 +337,65 @@
   
   At the code location where the relative jump will redirect control flow, set rax to 0x1.
 
-  Solution : 
-    
+  Solution :    Note : https://ftp.gnu.org/old-gnu/Manuals/gas-2.9.1/html_chapter/as_7.html
+
+  jmp target        ; nhảy đến target: 
+
+  .rept 0x51        ; copy đoạn code lặp lại 0x51 = 81 lần 
+
+    nop             ; no operation, để tạo ra 1 khoảng trống padding 
+
+  .endr             ; kết thúc vùng .rept ... .endr
+
+  target:           ; label đánh dấu vị trí nhảy đến 
+
+  mov rax, 0x1
+
+  25. jump-trampoline: Now, we will combine the two prior levels and perform the following:
+
+  Create a two jump trampoline:
+  
+  Make the first instruction in your code a jmp.
+  
+  Make that jmp a relative jump to 0x51 bytes from its current position.
+  
+  At 0x51, write the following code:
+  
+  Place the top value on the stack into register rdi.
+  
+  jmp to the absolute address 0x403000.
+
+  Solution: Bài này là kết hợp của absolute jump và relative jump 
+  
+  jmp target
+
+  .rept 0x51
+
+  nop
+
+  .endr
+
+  target :
+
+  pop rdi
+
+  mov rax, 0x403000    ; từ chỗ pop rdi là để tạo stack, mov rax và jmp rax là 1 absolute jump 
+
+  jmp rax  
+
+  26. conditional-jump : Using the above knowledge, implement the following:
+
+if [x] is 0x7f454c46:
+    y = [x+4] + [x+8] + [x+12]
+else if [x] is 0x00005A4D:
+    y = [x+4] - [x+8] - [x+12]
+else:
+    y = [x+4] * [x+8] * [x+12]
+Where:
+
+x = rdi, y = rax.
+Assume each dereferenced value is a signed dword. This means the values can start as a negative value at each memory position.
+
+A valid solution will use the following at least once:
+
+jmp (any variant), cmp
