@@ -290,4 +290,52 @@
   
   pop rsi     ; swap, lấy giá trị từ rsi suy ra rsi = 2 
 
-  22. 
+  22. average-stack-values : Without using pop, please calculate the average of 4 consecutive quad words stored on the stack. Push the average on the stack.
+
+  Solution :   Stack lưu 4 quad word liên tiếp 
+
+  mov rax, [rsp]      ; quad thứ nhất tại đỉnh stack vào rsp 
+
+  add rax, [rsp + 8]   ; quad thứ 2 +8 byte vào rax 
+
+  add rax, [rsp + 16]  ; quad thứ 3 và thứ 4 tương tự, stack lưu 4 quad word liên tiếp, từ địa chỉ RSP đến RSP + 24 (4 quad word x 8 byte = 32 byte)
+
+  add rax, [rsp + 24]  
+
+  mov rbx, 4           ; đưa 4 vào rbx để thực hiện phép chia và push lại giá trị từ rax 
+
+  div rbx
+
+  push rax 
+
+  23. absolute-jump : In x86, absolute jumps (jump to a specific address) are accomplished by first putting the target address in a register reg, then doing jmp 
+  reg.
+
+  In this level, we will ask you to do an absolute jump. Perform the following: Jump to the absolute address 0x403000
+
+  Solution :
+   mov rax, 0x403000  ; đẩy 0x403000 vào thanh ghi rax 
+
+   jmp rax            ; thực hiện phép absolute jump 
+
+  Note: Absolute jump là jump đến 1 specific address.
+
+  24. relative-jump :
+   Useful instructions for this level:
+
+  jmp (reg1 | addr | offset)
+  
+  nop
+  
+  Hint: For the relative jump, look up how to use labels in x86.
+  
+  Using the above knowledge, perform the following:
+  
+  Make the first instruction in your code a jmp.
+  
+  Make that jmp a relative jump to 0x51 bytes from the current position.
+  
+  At the code location where the relative jump will redirect control flow, set rax to 0x1.
+
+  Solution : 
+    
