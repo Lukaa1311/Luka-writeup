@@ -385,17 +385,382 @@
 
   26. conditional-jump : Using the above knowledge, implement the following:
 
-if [x] is 0x7f454c46:
+  if [x] is 0x7f454c46:
+  
     y = [x+4] + [x+8] + [x+12]
-else if [x] is 0x00005A4D:
+  
+  else if [x] is 0x00005A4D:
+  
     y = [x+4] - [x+8] - [x+12]
-else:
+  else:
+  
     y = [x+4] * [x+8] * [x+12]
-Where:
+  
+  Where:
+  
+  x = rdi, y = rax.
+  
+  Assume each dereferenced value is a signed dword. This means the values can start as a negative value at each memory position.
+  
+  A valid solution will use the following at least once:
+  
+  jmp (any variant), cmp
 
-x = rdi, y = rax.
-Assume each dereferenced value is a signed dword. This means the values can start as a negative value at each memory position.
+  Solution:
+  
+  Flow chung của chương trình :
+  
+    So sánh eax với ELF
+  
+    Nếu bằng -> nhảy tới case1 (cộng)
+  
+   So sánh eax với PE
+  
+    Nếu bằng -> nhảy tới case2 (trừ)
+  
+   Nếu không -> thực hiện nhân
+  
+   Sau đó nhảy tới done
 
-A valid solution will use the following at least once:
 
-jmp (any variant), cmp
+Source code: 
+
+    mov ebx, [rdi + 4]
+  
+    mov ecx, [rdi + 8]
+  
+    mov edx, [rdi + 12]
+  
+    mov eax, [rdi]
+  
+    cmp eax, 0x7f454c46       ; so sánh eax với ELF 
+  
+    je case1                  ; nếu bằng nhảy đến case 1 
+  
+    cmp eax, 0x00005A4D       ; so sánh eax với PE
+  
+    je case2                  ; nếu bằng nhảy đến case 2 
+  
+    imul ebx, ecx             ; 
+  
+    imul ebx, edx
+  
+    jmp done
+  
+    case1 :
+  
+    add ebx, ecx
+  
+    add ebx, edx
+  
+    jmp done
+  
+    case 2 :
+  
+    sub ebx, ecx
+  
+    sub ebx, edx
+  
+    jmp done
+  
+    done :
+  
+    mov eax, ebx 
+
+27. indirect-jump : Trước khi làm tiếp các bài về các lệnh nhảy, lưu í về kiến thức các lệnh nhảy : https://trungkmare.wordpress.com/2018/05/31/bang-lenh-nhay-trong-assembly/
+
+Using the above knowledge, implement the following logic:
+
+  if rdi is 0:
+  
+    jmp 0x403033
+  else if rdi is 1:
+  
+    jmp 0x4030e7
+  else if rdi is 2:
+  
+    jmp 0x4031be
+  else if rdi is 3:
+  
+    jmp 0x40325d
+  else:
+  
+    jmp 0x403329
+
+Please do the above with the following constraints:
+
+  Assume rdi will NOT be negative
+  
+  Use no more than 1 cmp instruction
+  
+  Use no more than 3 jumps (of any variant)
+  
+  We will provide you with the number to 'switch' on in rdi.
+  
+  We will provide you with a jump table base address in rsi.
+
+Here is an example table:
+
+  [0x4042e4] = 0x403033 (addrs will change)
+  
+  [0x4042ec] = 0x4030e7
+  
+  [0x4042f4] = 0x4031be
+  
+  [0x4042fc] = 0x40325d
+  
+  [0x404304] = 0x403329
+
+Solution : 
+
+cmp rdi, 3     ; so sánh rdi với 3, 3 là case lớn nhất hợp lệ 
+
+ja case        ; jump vào case mặc định nếu rdi > 3 
+
+jmp [rsi + rdi*8]    ; Nhảy tới địa chỉ trong bảng nhảy tại offset rdi*8 từ rsi
+
+case: 
+    jmp [rsi + 4*8]  ; Nhảy tới địa chỉ mặc định trong bảng nhảy 
+
+28. average-loop : As an example, a for-loop can be used to compute the sum of the numbers 1 to n:
+
+sum = 0
+
+i = 1
+
+while i <= n:  
+
+   sum += i
+   
+   i += 1  
+   
+Please compute the average of n consecutive quad words, where:
+
+rdi = memory address of the 1st quad word
+
+rsi = n (amount to loop for)
+
+rax = average computed  
+
+Solution : 
+
+xor rax, rax      ; Đặt rax = 0, dùng để tích lũy tổng các quad words
+
+xor rbx, rbx      ; Đặt rbx = 0, biến đếm vòng lặp (index i)
+
+sum_loop:         ; Nhãn bắt đầu vòng lặp 
+
+add rax, [rdi + rbx*8]    ; cộng vào rax giá trị tại địa chỉ [rdi + rbx * 8]
+
+inc rbx             ; Tăng biến đếm rbx lên 1 
+
+cmp rbx, rsi      ; So sánh rbx với rsi 
+
+jl sum_loop       ; Nếu rbx < rsi, nhảy lại sum_loop để cộng tiếp
+
+div rsi           
+
+29. count-non-zero: As an example, say we had a location in memory with adjacent numbers and we wanted to get the average of all the numbers until we find one bigger or equal to 0xff:
+
+average = 0
+
+i = 0
+
+while x[i] < 0xff:
+
+  average += x[i]
+  
+  i += 1
+  
+average /= i
+
+Using the above knowledge, please perform the following:
+
+Count the consecutive non-zero bytes in a contiguous region of memory, where:
+
+rdi = memory address of the 1st byte
+
+rax = number of consecutive non-zero bytes
+
+Additionally, if rdi = 0, then set rax = 0 (we will check)!
+
+An example test-case, let:
+
+rdi = 0x1000
+
+[0x1000] = 0x41
+
+[0x1001] = 0x42
+
+[0x1002] = 0x43
+
+[0x1003] = 0x00
+
+Then: rax = 3 should be set.
+
+Solution : 
+
+xor rax, rax       
+
+mov rbx, -1        
+
+cmp rdi, 0
+
+je done
+
+loop:
+
+    inc rbx
+    
+    mov rcx, [rdi+rbx]
+    
+    cmp rcx, 0
+    
+    jne loop
+    
+    mov rax, rbx
+
+done:
+
+30. string-lower :
+
+Please implement the following logic:
+
+str_lower(src_addr):
+
+  i = 0
+  
+  if src_addr != 0:
+  
+   while [src_addr] != 0x00:
+    
+   if [src_addr] <= 0x5a:
+      
+   [src_addr] = foo([src_addr])
+        
+   i += 1
+        
+   src_addr += 1
+      
+  return i 
+  
+  foo is provided at 0x403000. foo takes a single argument as a value and returns a value.
+  
+  All functions (foo and str_lower) must follow the Linux amd64 calling convention (also known as System V AMD64 ABI): System V AMD64 ABI
+  
+  Therefore, your function str_lower should look for src_addr in rdi and place the function return in rax.
+  
+  An important note is that src_addr is an address in memory (where the string is located) and [src_addr] refers to the byte that exists at src_addr.
+  
+  Therefore, the function foo accepts a byte as its first argument and returns a byte.
+
+Solution : 
+
+mov r8, 0x403000
+
+str_lower:
+
+   xor rcx, rcx
+    
+   cmp rdi, 0x0
+    
+   je done
+
+   loop:
+        mov rbx, rdi
+        
+        xor rdi, rdi
+        
+        mov dil, byte ptr [rbx]
+        
+        cmp dil, 0x0
+        
+        je done
+        
+        cmp dil, 0x5a
+        
+        jg greater
+        
+        inc rcx
+        
+        call r8
+        
+        mov byte ptr [rbx], al
+
+    greater:
+    
+        mov rdi, rbx
+        
+        inc rdi
+        
+        jmp loop
+
+    done:
+    
+        mov rax, rcx
+        
+        ret
+
+32. most-common-byte : 
+
+mov rbp, rsp
+
+sub rsp, 0x100
+
+xor r8, r8
+
+most_common_byte:
+
+    loop1:
+    
+        cmp r8, rsi
+        
+        jg next
+        
+        mov dl, byte ptr [rdi + r8]
+        
+        add byte ptr [rsp + rdx], 1
+        
+        inc r8
+        
+        jmp loop1
+
+    next:
+    
+        xor rcx, rcx
+        
+        xor rbx, rbx
+        
+        xor rax, rax
+        
+        loop2:
+        
+            cmp rcx, 0xff
+            
+            jg done
+            
+            cmp [rsp + rcx], bl
+            
+            jg updateFreq
+            
+            jmp increment
+
+        updateFreq:
+        
+            mov bl, [rsp + rcx]
+            
+            mov rax, rcx
+            
+            jmp increment
+
+        increment:
+        
+            inc rcx
+            
+            jmp loop2
+
+        done:
+        
+            mov rsp, rbp
+            
+            ret
