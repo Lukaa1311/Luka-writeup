@@ -21,7 +21,9 @@
    1. Set register : In this level, you will be working with registers. You will be asked to modify or read from registers.
       In this level, you will work with registers!
 
-      Please set the following: rdi = 0x1337
+      Please set the following:
+      
+      rdi = 0x1337
 
    Với đề bài này, mov giá trị 0x1337 vào thanh ghi rdi : mov rdi, 0x1337
   
