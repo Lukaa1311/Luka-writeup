@@ -17,12 +17,14 @@
 
   
 - Assembly Crash Course:
+  
    1. Set register : In this level, you will be working with registers. You will be asked to modify or read from registers.
       In this level, you will work with registers!
 
       Please set the following: rdi = 0x1337
 
    Với đề bài này, mov giá trị 0x1337 vào thanh ghi rdi : mov rdi, 0x1337
+  
   
    3. Set multiple register : In this level, you will work with multiple registers. Please set the following:
   
@@ -37,14 +39,16 @@
              mov rsp, 0x31337
   
    Lưu ý: khi nộp bài để lấy flag, để í khoảng trắng trong code snippet nếu không sẽ báo lỗi unexpected indent.
-  
+
+
    5. add-to-register:
      Do the following:
 
    Add 0x331337 to rdi
   
    Solution : add rdi, 0x331337
-  
+
+
    6. linear-equation-registers:
 
    Using your new knowledge, please compute the following:
@@ -64,7 +68,8 @@
                add rdi, rdx
                mov rax, rdi 
    Note : Phân biệt sự khác nhau giữa mul(unsigned multiply) và imul(signed multiply)
-  
+
+
    7. interger-division : Please compute the following:
   
    speed = distance / time, where:
@@ -85,6 +90,8 @@
 
    div là phép chia tạo ra 1 thương và 1 phần dư.
 
+
+
    8. modulo-operation: Please compute the following: rdi % rsi
   
    Solutions:
@@ -96,12 +103,14 @@
    Note: giữa interger-division và modulo-operation, ta có thể thấy 2 cái đều giống nhau vì là phép tính chia, nhưng sẽ khác nhau vì ở modulo-operation được tạo 
    ra để lấy phần dư, để hiểu thêm về div và phép chia hãy đọc lại và so sánh kĩ 2 bài này.
 
+
    9. set-upper-byte :Using only one move instruction, please set the upper 8 bits of the ax register to 0x42.
 
    Solutions : mov a   h, 0x42
 
    Note: Ban đầu mình làm là mov ax, 0x42 nhưng giá trị sai vì hình như ax là 0x0 theo như lỗi ở trong linux, và để í cái bảng, thì lower 8 bits sẽ là al, vậy nên 
    upper 8 bits sẽ là thanh ghi ah.
+
 
    10. efficient-modulo : Please compute the following:
        
@@ -113,6 +122,7 @@
    Note : đọc kĩ gợi í của bài, có 1 chút math trick : 256 = 2^8, 65536 = 2^16 -> số mũ là số lower của số bits -> 1 byte = 8 bit nên quy đổi về bảng các thanh ghi để lựa chọn thanh ghi đúng, ở
 
    trường hợp này rax là al, rdi là dil, rbx là bx, rsi là si.
+
 
    11. byte-extraction : Please perform the following: Set rax to the 5th least significant byte of rdi. 
 
@@ -128,6 +138,7 @@
 
    mov al, dil         ; al là bit thấp nhất của rax (byte0) và dil là bit thấp nhất của rdi (byte 0)
 
+
    12. bitwise-and : Without using the following instructions: mov, xchg, please perform the following:
 
    Set rax to the value of (rdi AND rsi)
@@ -137,6 +148,7 @@
    and rdi, rsi          ; thực hiện phép toán and 
 
    lea rax, [rdi]        ; lea chuyển địa chỉ của toán hạng nguồn đến với toán hạng đích, để í dấu [] vì có 2 ngữ cảnh khác nhau với giá trị khác nhau nếu có ngoặc hoặc không có ngoặc.
+
 
    13. check-even : Using only the following instructions:
 
@@ -150,9 +162,13 @@
   Implement the following logic:
 
   if x is even then
+  
     y = 1
+  
   else
+  
     y = 0
+  
   Where:
   
   x = rdi
@@ -177,13 +193,19 @@
 
   or rax, rdi          ; gán rax = rdi ( 0 hoặc 1)
 
+
+
   13. memory-read : Please perform the following: Place the value stored at 0x404000 into rax. Make sure the value in rax is the original value stored at 0x404000.
  
   Solution : mov rax, [0x404000]   ; lưu ý ở đây là dấu [] thể hiện cho memory access, đọc giá trị từ bộ nhớ tại địa chỉ 0x404000 vào thanh ghi rax.
 
+
+
   14. memory-write : Place the value stored in rax to 0x404000
 
   Solution : mov [0x404000], rax  ; khác với bài trên, bài này là ghi giá trị trong thanh ghi rax vào bộ nhớ tại địa chỉ 0x404000.
+
+
 
   15. memory-increment :
   Place the value stored at 0x404000 into rax.
@@ -204,9 +226,13 @@
   ví dụ nếu mov rax, [0x404000] thì sẽ là đọc giá trị tại bộ nhớ 0x404000 vào thanh ghi rax, còn lệnh add [0x404000], rbx là cộng trực tiếp vào vùng nhớ chứ
   không phải cộng vào thanh ghi.
 
+
+
   16. byte-access : Set rax to the byte at 0x404000.
 
   Solution: mov al, [0x404000] ; đọc 1 byte từ bộ nhớ tại địa chỉ trên và lưu vào thanh ghi al.
+
+
 
   17. memory-size-access :
   
@@ -228,6 +254,8 @@
   
   mov rdx, [0x404000]
 
+
+
   18. little-endian-write : Using the earlier mentioned info, perform the following:
 
   Set [rdi] = 0xdeadbeef00001337
@@ -243,6 +271,8 @@
   movq rbx, 0xc0ffee0000
   
   movq [rsi], rbx
+
+
 
   19. memory-sum : Perform the following:
 
@@ -262,6 +292,8 @@
 
   movq rax, rsi
 
+
+
   20. stack-subtraction : Using these instructions, take the top value of the stack, subtract rdi from it, then put it back.
 
   Solution:
@@ -271,6 +303,8 @@
   sub rax, rdi   ; lấy rax - rdi
 
   push rax       ; đẩy giá trị vừa trừ trở lại vào trong đỉnh stack
+
+
 
   21. swap-stack-values : Using only the following instructions:
 
@@ -290,6 +324,8 @@
   
   pop rsi     ; swap, lấy giá trị từ rsi suy ra rsi = 2 
 
+
+
   22. average-stack-values : Without using pop, please calculate the average of 4 consecutive quad words stored on the stack. Push the average on the stack.
 
   Solution :   Stack lưu 4 quad word liên tiếp 
@@ -308,6 +344,8 @@
 
   push rax 
 
+
+
   23. absolute-jump : In x86, absolute jumps (jump to a specific address) are accomplished by first putting the target address in a register reg, then doing jmp 
   reg.
 
@@ -319,6 +357,8 @@
    jmp rax            ; thực hiện phép absolute jump 
 
   Note: Absolute jump là jump đến 1 specific address.
+
+
 
   24. relative-jump :
    Useful instructions for this level:
@@ -351,6 +391,8 @@
 
   mov rax, 0x1
 
+
+
   25. jump-trampoline: Now, we will combine the two prior levels and perform the following:
 
   Create a two jump trampoline:
@@ -382,6 +424,8 @@
   mov rax, 0x403000    ; từ chỗ pop rdi là để tạo stack, mov rax và jmp rax là 1 absolute jump 
 
   jmp rax  
+
+
 
   26. conditional-jump : Using the above knowledge, implement the following:
 
@@ -467,6 +511,8 @@ Source code:
   
     mov eax, ebx 
 
+
+
 27. indirect-jump : Trước khi làm tiếp các bài về các lệnh nhảy, lưu í về kiến thức các lệnh nhảy : https://trungkmare.wordpress.com/2018/05/31/bang-lenh-nhay-trong-assembly/
 
 Using the above knowledge, implement the following logic:
@@ -522,6 +568,8 @@ jmp [rsi + rdi*8]    ; Nhảy tới địa chỉ trong bảng nhảy tại offse
 case: 
     jmp [rsi + 4*8]  ; Nhảy tới địa chỉ mặc định trong bảng nhảy 
 
+
+
 28. average-loop : As an example, a for-loop can be used to compute the sum of the numbers 1 to n:
 
 sum = 0
@@ -559,6 +607,8 @@ cmp rbx, rsi      ; So sánh rbx với rsi
 jl sum_loop       ; Nếu rbx < rsi, nhảy lại sum_loop để cộng tiếp
 
 div rsi           
+
+
 
 29. count-non-zero: As an example, say we had a location in memory with adjacent numbers and we wanted to get the average of all the numbers until we find one bigger or equal to 0xff:
 
@@ -610,17 +660,19 @@ je done
 
 loop:
 
-    inc rbx
+   inc rbx
     
-    mov rcx, [rdi+rbx]
+   mov rcx, [rdi+rbx]
     
-    cmp rcx, 0
+   cmp rcx, 0
     
-    jne loop
+   jne loop
     
-    mov rax, rbx
+   mov rax, rbx
 
 done:
+
+
 
 30. string-lower :
 
@@ -653,20 +705,22 @@ str_lower(src_addr):
   An important note is that src_addr is an address in memory (where the string is located) and [src_addr] refers to the byte that exists at src_addr.
   
   Therefore, the function foo accepts a byte as its first argument and returns a byte.
+  
 
 Solution : 
 
-mov r8, 0x403000
+     mov r8, 0x403000
 
-str_lower:
+    str_lower:
 
-   xor rcx, rcx
+    xor rcx, rcx
     
-   cmp rdi, 0x0
+    cmp rdi, 0x0
     
-   je done
+    je done
 
-   loop:
+    loop: 
+   
         mov rbx, rdi
         
         xor rdi, rdi
@@ -701,17 +755,21 @@ str_lower:
         
         ret
 
-32. most-common-byte : 
 
-mov rbp, rsp
 
-sub rsp, 0x100
+32. most-common-byte :
 
-xor r8, r8
+Solution: 
 
-most_common_byte:
+        mov rbp, rsp
 
-    loop1:
+        sub rsp, 0x100
+
+        xor r8, r8
+
+        most_common_byte:
+
+        loop1:
     
         cmp r8, rsi
         
@@ -725,7 +783,7 @@ most_common_byte:
         
         jmp loop1
 
-    next:
+        next:
     
         xor rcx, rcx
         
