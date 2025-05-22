@@ -136,9 +136,9 @@
 
    Solution :
 
-   shr rdi, 32         ; 5th least significant byte là byte số 4, đếm từ 0, ô trống sẽ là | 0 | 0 | 0 | 0 | B7 | B6 | B5 | B4 | 
-
-   mov al, dil         ; al là bit thấp nhất của rax (byte0) và dil là bit thấp nhất của rdi (byte 0)
+       shr rdi, 32         ; 5th least significant byte là byte số 4, đếm từ 0, ô trống sẽ là | 0 | 0 | 0 | 0 | B7 | B6 | B5 | B4 | 
+    
+       mov al, dil         ; al là bit thấp nhất của rax (byte0) và dil là bit thấp nhất của rdi (byte 0)
 
 
    12. bitwise-and : Without using the following instructions: mov, xchg, please perform the following:
@@ -147,9 +147,9 @@
 
    Solution :
   
-   and rdi, rsi          ; thực hiện phép toán and 
-
-   lea rax, [rdi]        ; lea chuyển địa chỉ của toán hạng nguồn đến với toán hạng đích, để í dấu [] vì có 2 ngữ cảnh khác nhau với giá trị khác nhau nếu có ngoặc hoặc không có ngoặc.
+       and rdi, rsi          ; thực hiện phép toán and 
+    
+       lea rax, [rdi]        ; lea chuyển địa chỉ của toán hạng nguồn đến với toán hạng đích, để í dấu [] vì có 2 ngữ cảnh khác nhau với giá trị khác nhau nếu có ngoặc hoặc không có ngoặc.
 
 
    13. check-even : Using only the following instructions:
@@ -187,13 +187,13 @@
   
   Code solution :
 
-  and rdi, 1           ; giữ lại bit thấp nhất của rdi, các bit khác thành 0
-
-  xor rax, rax         ; clear rax về 0(số nào xor với chính nó cũng bằng 0)
-
-  xor rdi, 1           ; đảo bit thấp nhất của thanh ghi rdi, 0 thành 1, 1 thành 0
-
-  or rax, rdi          ; gán rax = rdi ( 0 hoặc 1)
+        and rdi, 1           ; giữ lại bit thấp nhất của rdi, các bit khác thành 0
+      
+        xor rax, rax         ; clear rax về 0(số nào xor với chính nó cũng bằng 0)
+      
+        xor rdi, 1           ; đảo bit thấp nhất của thanh ghi rdi, 0 thành 1, 1 thành 0
+      
+        or rax, rdi          ; gán rax = rdi ( 0 hoặc 1)
 
 
 
@@ -218,11 +218,11 @@
 
   Solution :
 
-  mov rax, [0x404000]      
-  
-  mov rbx, 0x1337
-  
-  add [0x404000], rbx 
+        mov rax, [0x404000]      
+        
+        mov rbx, 0x1337
+        
+        add [0x404000], rbx 
 
   Challenge noting : tuy là đã nắm rõ khái quát về memory access và memory write, nhưng vẫn rất dễ nhầm lẫn bởi thứ tự khi khai báo thanh ghi trên câu lệnh. 
   ví dụ nếu mov rax, [0x404000] thì sẽ là đọc giá trị tại bộ nhớ 0x404000 vào thanh ghi rax, còn lệnh add [0x404000], rbx là cộng trực tiếp vào vùng nhớ chứ
@@ -248,13 +248,13 @@
 
   Solution : Đã có công thức sẵn về byte, word, double word và quad word, chỉ cần tìm đúng những thanh ghi tương ứng là được ( xem bảng thanh ghi trong note NASM của 5o1z)
   
-  mov al, [0x404000]
-  
-  mov bx, [0x404000]
-  
-  mov ecx, [0x404000]
-  
-  mov rdx, [0x404000]
+        mov al, [0x404000]
+        
+        mov bx, [0x404000]
+        
+        mov ecx, [0x404000]
+        
+        mov rdx, [0x404000]
 
 
 
@@ -266,13 +266,13 @@
 
   Solution : ở đây chúng ta sử dụng lệnh movq ( lệnh di chuyển dữ liệu dạng 64-bit/ quadword):
 
-  movq rax, 0xdeadbeef00001337
-  
-  movq [rdi], rax
-  
-  movq rbx, 0xc0ffee0000
-  
-  movq [rsi], rbx
+        movq rax, 0xdeadbeef00001337
+        
+        movq [rdi], rax
+        
+        movq rbx, 0xc0ffee0000
+        
+        movq [rsi], rbx
 
 
 
@@ -286,13 +286,13 @@
 
   Solution:
   
-  movq rax, [rdi]
-
-  movq rbx, [rdi + 8]   
-
-  addq rax, rbx   ; tính tổng sum với 2 giá trị vừa lưu trữ ở trên 
-
-  movq rax, rsi
+        movq rax, [rdi]
+      
+        movq rbx, [rdi + 8]   
+      
+        addq rax, rbx   ; tính tổng sum với 2 giá trị vừa lưu trữ ở trên 
+      
+        movq rax, rsi
 
 
 
@@ -300,11 +300,11 @@
 
   Solution:
 
-  pop rax        ; lấy giá trị hiện tại trên đỉnh stack cho vào thanh ghi rax
-
-  sub rax, rdi   ; lấy rax - rdi
-
-  push rax       ; đẩy giá trị vừa trừ trở lại vào trong đỉnh stack
+      pop rax        ; lấy giá trị hiện tại trên đỉnh stack cho vào thanh ghi rax
+    
+      sub rax, rdi   ; lấy rax - rdi
+    
+      push rax       ; đẩy giá trị vừa trừ trở lại vào trong đỉnh stack
 
 
 
@@ -317,14 +317,14 @@
   Swap values in rdi and rsi.
 
   Solution :
-
-  push rdi    ; đấy giá trị từ top stack vào rdi trước, ví dụ bắt đầu là rdi = 2
-  
-  push rsi    ; tương tự đẩy vào rsi trước, ví dụ rsi = 5
-  
-  pop rdi     ; swap, lấy giá trị từ rdi suy ra rdi = 5
-  
-  pop rsi     ; swap, lấy giá trị từ rsi suy ra rsi = 2 
+      
+        push rdi    ; đấy giá trị từ top stack vào rdi trước, ví dụ bắt đầu là rdi = 2
+        
+        push rsi    ; tương tự đẩy vào rsi trước, ví dụ rsi = 5
+        
+        pop rdi     ; swap, lấy giá trị từ rdi suy ra rdi = 5
+        
+        pop rsi     ; swap, lấy giá trị từ rsi suy ra rsi = 2 
 
 
 
@@ -332,19 +332,19 @@
 
   Solution :   Stack lưu 4 quad word liên tiếp 
 
-  mov rax, [rsp]      ; quad thứ nhất tại đỉnh stack vào rsp 
-
-  add rax, [rsp + 8]   ; quad thứ 2 +8 byte vào rax 
-
-  add rax, [rsp + 16]  ; quad thứ 3 và thứ 4 tương tự, stack lưu 4 quad word liên tiếp, từ địa chỉ RSP đến RSP + 24 (4 quad word x 8 byte = 32 byte)
-
-  add rax, [rsp + 24]  
-
-  mov rbx, 4           ; đưa 4 vào rbx để thực hiện phép chia và push lại giá trị từ rax 
-
-  div rbx
-
-  push rax 
+      mov rax, [rsp]      ; quad thứ nhất tại đỉnh stack vào rsp 
+    
+      add rax, [rsp + 8]   ; quad thứ 2 +8 byte vào rax 
+    
+      add rax, [rsp + 16]  ; quad thứ 3 và thứ 4 tương tự, stack lưu 4 quad word liên tiếp, từ địa chỉ RSP đến RSP + 24 (4 quad word x 8 byte = 32 byte)
+    
+      add rax, [rsp + 24]  
+    
+      mov rbx, 4           ; đưa 4 vào rbx để thực hiện phép chia và push lại giá trị từ rax 
+    
+      div rbx
+    
+      push rax 
 
 
 
@@ -354,9 +354,10 @@
   In this level, we will ask you to do an absolute jump. Perform the following: Jump to the absolute address 0x403000
 
   Solution :
-   mov rax, 0x403000  ; đẩy 0x403000 vào thanh ghi rax 
-
-   jmp rax            ; thực hiện phép absolute jump 
+  
+       mov rax, 0x403000  ; đẩy 0x403000 vào thanh ghi rax 
+                  
+       jmp rax            ; thực hiện phép absolute jump 
 
   Note: Absolute jump là jump đến 1 specific address.
 
@@ -381,17 +382,17 @@
 
   Solution :    Note : https://ftp.gnu.org/old-gnu/Manuals/gas-2.9.1/html_chapter/as_7.html
 
-  jmp target        ; nhảy đến target: 
-
-  .rept 0x51        ; copy đoạn code lặp lại 0x51 = 81 lần 
-
-    nop             ; no operation, để tạo ra 1 khoảng trống padding 
-
-  .endr             ; kết thúc vùng .rept ... .endr
-
-  target:           ; label đánh dấu vị trí nhảy đến 
-
-  mov rax, 0x1
+        jmp target        ; nhảy đến target: 
+      
+        .rept 0x51        ; copy đoạn code lặp lại 0x51 = 81 lần 
+      
+          nop             ; no operation, để tạo ra 1 khoảng trống padding 
+      
+        .endr             ; kết thúc vùng .rept ... .endr
+      
+        target:           ; label đánh dấu vị trí nhảy đến 
+      
+        mov rax, 0x1
 
 
 
@@ -411,21 +412,21 @@
 
   Solution: Bài này là kết hợp của absolute jump và relative jump 
   
-  jmp target
-
-  .rept 0x51
-
-  nop
-
-  .endr
-
-  target :
-
-  pop rdi
-
-  mov rax, 0x403000    ; từ chỗ pop rdi là để tạo stack, mov rax và jmp rax là 1 absolute jump 
-
-  jmp rax  
+        jmp target
+      
+        .rept 0x51
+      
+        nop
+      
+        .endr
+      
+        target :
+      
+        pop rdi
+      
+        mov rax, 0x403000    ; từ chỗ pop rdi là để tạo stack, mov rax và jmp rax là 1 absolute jump 
+      
+        jmp rax  
 
 
 
@@ -561,15 +562,15 @@ Here is an example table:
 
 Solution : 
 
-cmp rdi, 3     ; so sánh rdi với 3, 3 là case lớn nhất hợp lệ 
-
-ja case        ; jump vào case mặc định nếu rdi > 3 
-
-jmp [rsi + rdi*8]    ; Nhảy tới địa chỉ trong bảng nhảy tại offset rdi*8 từ rsi
-
-case: 
-    jmp [rsi + 4*8]  ; Nhảy tới địa chỉ mặc định trong bảng nhảy 
-
+      cmp rdi, 3     ; so sánh rdi với 3, 3 là case lớn nhất hợp lệ 
+      
+      ja case        ; jump vào case mặc định nếu rdi > 3 
+      
+      jmp [rsi + rdi*8]    ; Nhảy tới địa chỉ trong bảng nhảy tại offset rdi*8 từ rsi
+      
+      case: 
+          jmp [rsi + 4*8]  ; Nhảy tới địa chỉ mặc định trong bảng nhảy 
+      
 
 
 28. average-loop : As an example, a for-loop can be used to compute the sum of the numbers 1 to n:
@@ -594,21 +595,21 @@ rax = average computed
 
 Solution : 
 
-xor rax, rax      ; Đặt rax = 0, dùng để tích lũy tổng các quad words
-
-xor rbx, rbx      ; Đặt rbx = 0, biến đếm vòng lặp (index i)
-
-sum_loop:         ; Nhãn bắt đầu vòng lặp 
-
-add rax, [rdi + rbx*8]    ; cộng vào rax giá trị tại địa chỉ [rdi + rbx * 8]
-
-inc rbx             ; Tăng biến đếm rbx lên 1 
-
-cmp rbx, rsi      ; So sánh rbx với rsi 
-
-jl sum_loop       ; Nếu rbx < rsi, nhảy lại sum_loop để cộng tiếp
-
-div rsi           
+      xor rax, rax      ; Đặt rax = 0, dùng để tích lũy tổng các quad words
+      
+      xor rbx, rbx      ; Đặt rbx = 0, biến đếm vòng lặp (index i)
+      
+      sum_loop:         ; Nhãn bắt đầu vòng lặp 
+      
+      add rax, [rdi + rbx*8]    ; cộng vào rax giá trị tại địa chỉ [rdi + rbx * 8]
+      
+      inc rbx             ; Tăng biến đếm rbx lên 1 
+      
+      cmp rbx, rsi      ; So sánh rbx với rsi 
+      
+      jl sum_loop       ; Nếu rbx < rsi, nhảy lại sum_loop để cộng tiếp
+      
+      div rsi           
 
 
 
@@ -652,29 +653,29 @@ Then: rax = 3 should be set.
 
 Solution : 
 
-xor rax, rax       
-
-mov rbx, -1        
-
-cmp rdi, 0
-
-je done
-
-loop:
-
-   inc rbx
+    xor rax, rax       ; rax = 0, dùng để đếm số byte khác 0
     
-   mov rcx, [rdi+rbx]
+    mov rbx, -1        ; rbx = -1, biến đếm index 
     
-   cmp rcx, 0
+    cmp rdi, 0         ; kiểm tra rdi có phải 0 không 
     
-   jne loop
+    je done            ; nếu rdi = 0, nhảy tới done 
     
-   mov rax, rbx
-
-done:
-
-
+    loop:
+    
+       inc rbx          ; index + 1 
+        
+       mov rcx, [rdi+rbx]  
+        
+       cmp rcx, 0       
+        
+       jne loop          ; nếu khác 0, tiếp tục đếm 
+        
+       mov rax, rbx      ; bằng 0 thì lưu số byte đếm được vào rax 
+    
+    done:
+    
+    
 
 30. string-lower :
 
@@ -711,45 +712,45 @@ str_lower(src_addr):
 
 Solution : 
 
-     mov r8, 0x403000
+     mov r8, 0x403000     ; Đưa địa chỉ foo vào r8
 
     str_lower:
 
-    xor rcx, rcx
+    xor rcx, rcx          ; rcx = 0 
     
-    cmp rdi, 0x0
+    cmp rdi, 0x0          ; kiểm tra rdi xem có bằng 0x0 
     
-    je done
+    je done               ; nhảy đến done nếu rdi = 0
 
     loop: 
    
-        mov rbx, rdi
+        mov rbx, rdi     
         
-        xor rdi, rdi
+        xor rdi, rdi     ; xóa rdi để truyền tham số cho foo 
         
-        mov dil, byte ptr [rbx]
+        mov dil, byte ptr [rbx]   ; lấy byte tại phần thấp của rbx vào rdi 
         
-        cmp dil, 0x0
+        cmp dil, 0x0            ; kiểm tra byte hiện tại xem có phải 0x0 
         
-        je done
+        je done                 ; nếu bằng 0 thì end loop 
         
-        cmp dil, 0x5a
+        cmp dil, 0x5a           ; so sánh byte với kí tự 0x5A (Z) 
         
-        jg greater
+        jg greater              ; byte > 0x5A -> nhảy đến greater 
         
-        inc rcx
+        inc rcx                 ; tăng biến đếm byte 
         
-        call r8
+        call r8                 ; gọi hàm foo với byte trong rdi(dil) 
         
-        mov byte ptr [rbx], al
+        mov byte ptr [rbx], al   ; gắn byte trả về của foo vào vị trí 
 
     greater:
     
-        mov rdi, rbx
+        mov rdi, rbx      ; phục hồi địa chỉ hiện tại vào rdi 
         
-        inc rdi
+        inc rdi           ; tăng địa chỉ lên 1 byte 
         
-        jmp loop
+        jmp loop          ; quay lại vòng lặp để kiểm tra kí tự tiếp 
 
     done:
     
@@ -765,29 +766,29 @@ Solution:
 
         mov rbp, rsp
 
-        sub rsp, 0x100
+        sub rsp, 0x100    ; cấp 256 byte vùng nhớ trên stack 
 
-        xor r8, r8
+        xor r8, r8        ; đặt r8 = 0 cho biến đếm i 
 
         most_common_byte:
 
         loop1:
     
-        cmp r8, rsi
+        cmp r8, rsi        ; so sánh i với size 
         
-        jg next
+        jg next            ; if i > size chuyển sang tìm max 
         
-        mov dl, byte ptr [rdi + r8]
+        mov dl, byte ptr [rdi + r8]     
         
-        add byte ptr [rsp + rdx], 1
+        add byte ptr [rsp + rdx], 1        ; Tăng số đếm tương ứng trong mảng đếm trên stack
         
-        inc r8
+        inc r8                 ;  i++
         
-        jmp loop1
+        jmp loop1              ; lặp lại vòng đếm 
 
         next:
     
-        xor rcx, rcx
+        xor rcx, rcx            
         
         xor rbx, rbx
         
@@ -795,29 +796,29 @@ Solution:
         
         loop2:
         
-            cmp rcx, 0xff
+            cmp rcx, 0xff         ; So sánh rcx với 0xff (256 giá trị byte)
             
-            jg done
+            jg done               ; Nếu rcx > 0xff, kết thúc vòng tìm max
             
-            cmp [rsp + rcx], bl
+            cmp [rsp + rcx], bl   ; so sánh tần suất byte hiện tại với max_freq 
+             
+            jg updateFreq         ; nếu lớn hơn, cập nhật max_freq với max_freq_byte 
             
-            jg updateFreq
-            
-            jmp increment
+            jmp increment         ; nếu không thì tiếp tục vòng 
 
         updateFreq:
         
-            mov bl, [rsp + rcx]
+            mov bl, [rsp + rcx]    ; cập nhật max_freq = tần số byte hiện tại 
             
-            mov rax, rcx
+            mov rax, rcx           ; max_freq_byte = byte hiện tại 
             
-            jmp increment
+            jmp increment          ; tăng rcx, tiếp tục vòng 
 
         increment:
         
-            inc rcx
+            inc rcx                ; tăng biến đếm byte lên 1 
             
-            jmp loop2
+            jmp loop2              ; back lại vòng để tìm max 
 
         done:
         
