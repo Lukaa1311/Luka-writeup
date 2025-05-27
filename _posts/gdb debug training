@@ -1,2 +1,11 @@
 # Code Debug learning 
 1. GDB basic command :
++ Compiling program : gcc -ggdb (program_name).c -o (program_name) or gcc -g program.c -o program 
++ Loading a binary from system : gdb --quiet ./program or gdb -q - ./program 
++ Quitting gdb : gdb -q - quit 
++ Running or re-running a program : 
+'''
+gdb ./program -q 
+....
+(gdb) r 
+''' 
