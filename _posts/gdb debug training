@@ -4,8 +4,9 @@
 + Loading a binary from system : gdb --quiet ./program or gdb -q - ./program 
 + Quitting gdb : gdb -q - quit 
 + Running or re-running a program : 
-'''
-gdb ./program -q 
-....
-(gdb) r 
-''' 
+
+          '''
+          gdb ./program -q 
+          ....
+          (gdb) r 
+          ''' 
