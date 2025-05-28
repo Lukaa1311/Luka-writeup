@@ -10,3 +10,10 @@
           ....
           (gdb) r 
           ''' 
++ Starting a program and breaking at its entry point : 
+
+           '''
+          gdb ./program -q 
+          ....
+          (gdb) start 
+          ''' 
